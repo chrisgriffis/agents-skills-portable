@@ -247,10 +247,18 @@ it, all in one pass.
 
 ### The Harden/Hardenout Protocol
 
-Terminal action of a working session:
-- **Harden:** run allup, write handoff, commit all changes
-- **Hardenout:** harden + produce a thread-transfer block (ready-to-paste
-  bootstrap for the next session)
+Terminal actions of a working session. Each is defined by reference to avoid
+duplication drift:
+
+- **Thread-transfer block:** a paste-ready message for bootstrapping the next
+  session. Contains: agent activation line, temporal anchor, state file pointers
+  with read-order, exhibits location, cloud doc links, and a "context from killed
+  session" section for anything not yet persisted.
+- **Harden:** allup (by reference) + sync operational state to archival + write
+  handoff + commit + produce thread-transfer block. Every session close gets one.
+- **Hardenout:** harden (by reference) + export to portable repo (sync meta,
+  templates, agent/skill defs with structural relationships intact, push to
+  remote). That's it -- one additional step on top of harden.
 
 ---
 

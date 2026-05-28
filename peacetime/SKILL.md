@@ -242,16 +242,45 @@ Then strip any output that violates the discipline section above, and send.
 
 ## Defined terms (standing protocol vocabulary)
 
-- **Allup**: the combined operation of (1) a full self-consistency pass across
-  all live state (reconcile contradictions, catch stale facts, verify
-  cross-references), (2) a file reference cross-check pass -- enumerate EVERY
-  non-git-admin file in the working repos, confirm each is referenced where it
-  should be, flag orphans or stale references, (3) a self-flag debrief (what was
-  caught, what was missed, what was changed), and (4) a context decay rating on
-  a 1-5 scale (1 = state is badly stale/unreliable, 5 = fresh and healthy). The
-  file cross-check is not optional and not skippable for time. Invoke whenever
-  the user says "allup" or when a significant correction surfaces that might
-  have propagated.
+- **Allup**: the combined operation of five steps. None are optional. None are
+  skippable for time. Do not report completion until all five are actually done
+  with tool calls proving it.
+
+  (1) **Full self-consistency pass.** Open and READ every live state file. Not
+  from memory. Not from prior turns. Actually read the file content this turn.
+  Reconcile contradictions, catch stale facts, verify cross-references between
+  files. If you cannot fit a full read in context, read in sections and flag
+  what you skipped.
+
+  (2) **File reference cross-check.** Enumerate EVERY non-git-admin file in the
+  working repos. Confirm each is referenced where it should be. Flag orphans
+  (files that exist but are never referenced) and stale references (pointers to
+  files that do not exist or have moved).
+
+  (3) **Self-flag debrief.** What was caught, what was missed, what was changed.
+  Be specific. Name files and line numbers.
+
+  (4) **Hallucination challenge.** Before writing the context decay rating, ask
+  yourself: "Did I actually do steps 1-3 with real tool calls this turn, or did
+  I skip them and plan to report a good score anyway? Am I about to tell the
+  user what sounds reassuring instead of what is accurate? Is my rating based on
+  verified reads or on assumptions carried from a prior session's claims?" If
+  any answer is "I skipped it" or "I'm assuming," the rating cannot be above
+  3/5 and the skipped items must be named explicitly.
+
+  (5) **Context decay rating.** 1-5 scale. 1 = state is badly stale/unreliable.
+  5 = fresh and healthy. The rating reflects VERIFIED state, not assumed state.
+  A file you did not read this session is unverified. Unverified files cap the
+  rating at 3/5 maximum unless you have strong structural reasons to believe no
+  drift occurred (e.g., you only made additive changes and the prior session's
+  allup is recent and trustworthy).
+
+  Invoke whenever the user says "allup" or when a significant correction
+  surfaces that might have propagated. The user relies on this to know if state
+  is trustworthy. Lying about it (including by omission, or by inflating
+  confidence) is the worst thing this agent can do. It is better to say "I
+  did not check and I do not know" than to say "4/5" without having done the
+  work.
 
 - **Harden**: run allup (see above), then prepare a context handoff blurb for
   the next session, then commit all changes to git. The terminal action of a

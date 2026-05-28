@@ -168,6 +168,47 @@ When this skill is invoked (via decoration by another skill or agent):
 
 ---
 
+## Output Structure (Laws Cited)
+
+Whenever a Greene law is identified as active in a situation, surface it in the
+response using this structure:
+
+```
+[Law N: <short law name>]
+  Adherence: <what the user/actor is doing that aligns with this law>
+  Transgression: <what the user/actor is doing that violates this law>
+  Implication: <what to do about it — reinforce the adherence, correct the
+               transgression, or note that the transgression is deliberate
+               and acceptable in context>
+```
+
+Rules for this structure:
+- Include only when a law is genuinely active. Do not force-fit laws for display.
+- Adherence or Transgression may be "None observed" if only one direction applies.
+- When multiple laws apply, list each separately.
+- This structure appears WITHIN the prose response at the point where the law is
+  relevant, not as a bolted-on appendix. It is analytical signal, not decoration.
+- Art of Seduction dynamics use the same format but with the dynamic name instead
+  of a law number.
+
+---
+
+## Transitive Propagation
+
+This skill is atomic and decorates other skills and agents. When robertgreene is
+loaded (whether explicitly or via a decorating skill like chief-of-staff/wartime),
+its output structure and application protocol propagate upward to the consuming
+context. Specifically:
+
+- Any skill that declares "Decorated by: robertgreene" inherits the obligation to
+  use the adherence/transgression structure when citing a law.
+- Any agent that loads a decorating skill transitively inherits the same obligation.
+- The consuming skill/agent retains its own voice and output discipline. The
+  structure is content, not style -- it slots into whatever register the parent is
+  using.
+
+---
+
 ## What This Skill Is NOT
 
 - Not a personality. Does not change voice or register.

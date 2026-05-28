@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[DOCUMENT TITLE]</title>
+    <style>
+        /*
+         * STRATEGY VISUAL TEMPLATE
+         * ========================
+         * Prestige coffee-table-book style for organizational strategy documents.
+         * Single-file, inline, no external dependencies.
+         *
+         * Design register: editorial/chronicle. Not a dashboard.
+         * The binding should crackle on first open.
+         *
+         * Adapt: replace [BRACKETED] content. Keep the structural bones.
+         */
+
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+        :root {
+            --ink: #1a1a1a;
+            --paper: #f8f5f0;
+            --paper-deep: #f0ebe3;
+            --gold: #8b7355;
+            --gold-light: #c4a96a;
+            --gold-dim: rgba(139,115,85,0.15);
+            --red-ink: #6b2d2d;
+            --blue-ink: #2d3a6b;
+            --green-ink: #2d5a3a;
+            --muted: #6b6560;
+            --rule: rgba(139,115,85,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            background: var(--ink);
+            color: var(--ink);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        /* The book binding -- outer frame */
+        .binding {
+            max-width: 900px;
+            margin: 3rem auto;
+            background: var(--paper);
+            box-shadow:
+                0 0 0 1px var(--gold),
+                0 0 0 8px #2a2420,
+                0 0 0 9px var(--gold),
+                0 4px 30px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .binding::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 12px solid transparent;
+            border-image: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-light)) 1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .page { padding: 4rem 5rem; }
+        @media (max-width: 768px) {
+            .page { padding: 2rem 1.5rem; }
+            .binding { margin: 0; }
+        }
+
+        /* Frontispiece */
+        .frontispiece {
+            text-align: center;
+            padding: 6rem 4rem;
+            border-bottom: 1px solid var(--rule);
+        }
+        .frontispiece::before {
+            content: '\2767'; /* floral heart */
+            display: block;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            opacity: 0.6;
+        }
+        .frontispiece h1 {
+            font-size: 3.2rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .frontispiece .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+        }
+        .frontispiece .epigraph {
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        .frontispiece .date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 3rem;
+        }
+
+        /* Chapter headings */
+        .chapter {
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--rule);
+        }
+        .chapter-number {
+            font-size: 4.5rem;
+            font-weight: 300;
+            color: var(--gold);
+            opacity: 0.4;
+            line-height: 1;
+            margin-bottom: -0.5rem;
+        }
+        .chapter h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+        .chapter .chapter-slug {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        /* Section subheads */
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        p { margin-bottom: 1rem; text-align: justify; hyphens: auto; }
+        ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.4rem; font-size: 0.95rem; }
+
+        /* Pull quotes */
+        .pullquote {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--muted);
+            text-align: center;
+            padding: 2rem 3rem;
+            margin: 2rem 0;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            line-height: 1.6;
+        }
+        .pullquote .attribution {
+            display: block;
+            font-size: 0.75rem;
+            font-style: normal;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 0.8rem;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            margin: 1.5rem 0;
+            padding: 1.2rem 1.5rem;
+            background: var(--paper-deep);
+            border-left: 3px solid var(--gold);
+            font-size: 0.95rem;
+        }
+        blockquote p { text-align: left; margin-bottom: 0.5rem; }
+        blockquote p:last-child { margin-bottom: 0; }
+
+        /* Cast entries (Dramatis Personae) */
+        .cast-entry {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: var(--paper-deep);
+            border: 1px solid var(--rule);
+            position: relative;
+        }
+        .cast-entry::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+        }
+        .cast-entry.ally::before { background: var(--green-ink); }
+        .cast-entry.adversary::before { background: var(--red-ink); }
+        .cast-entry.unknown::before { background: var(--muted); }
+        .cast-entry.asset::before { background: var(--blue-ink); }
+
+        .cast-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        .cast-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.8rem;
+        }
+        .cast-entry p { font-size: 0.92rem; text-align: left; line-height: 1.6; }
+        .cast-field {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 0.6rem;
+            margin-bottom: 0.2rem;
+        }
+
+        /* Terrain diagram */
+        .terrain-diagram {
+            background: var(--paper-deep);
+            border: 1px solid var(--rule);
+            padding: 2rem;
+            margin: 1.5rem 0;
+            font-family: 'Inter', monospace;
+            font-size: 0.78rem;
+            line-height: 2;
+            overflow-x: auto;
+            white-space: pre;
+            color: var(--muted);
+        }
+        .terrain-diagram .us { color: var(--green-ink); font-weight: 600; }
+        .terrain-diagram .them { color: var(--red-ink); font-weight: 600; }
+        .terrain-diagram .neutral { color: var(--blue-ink); }
+
+        /* Fault lines */
+        .fault-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 0.8rem 0;
+            border-bottom: 1px dotted var(--rule);
+        }
+        .fault-marker {
+            flex-shrink: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 0.5rem;
+        }
+        .fault-marker.hot { background: var(--red-ink); }
+        .fault-marker.warm { background: var(--gold); }
+        .fault-marker.structural { background: var(--blue-ink); }
+        .fault-line p { font-size: 0.9rem; text-align: left; margin: 0; }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 0; bottom: 0;
+            width: 1px;
+            background: var(--rule);
+        }
+        .timeline-entry {
+            position: relative;
+            margin-bottom: 1.2rem;
+            padding-left: 1rem;
+        }
+        .timeline-entry::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.6rem;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            background: var(--paper);
+        }
+        .timeline-entry.current::before { background: var(--gold); }
+        .timeline-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .timeline-entry p { font-size: 0.9rem; text-align: left; margin: 0.2rem 0 0 0; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        th {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-align: left;
+            padding: 0.6rem;
+            border-bottom: 2px solid var(--gold);
+        }
+        td {
+            padding: 0.6rem;
+            border-bottom: 1px solid var(--rule);
+            vertical-align: top;
+        }
+
+        /* Ornaments */
+        .ornament {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            opacity: 0.5;
+        }
+
+        /* Colophon */
+        .colophon {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--rule);
+            margin-top: 3rem;
+        }
+        .colophon p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="binding">
+
+    <!-- FRONTISPIECE -->
+    <div class="frontispiece">
+        <h1>[Document Title]</h1>
+        <div class="subtitle">[Subtitle or descriptor]</div>
+        <div class="epigraph">
+            "[Opening epigraph -- the thesis in one sentence]"
+        </div>
+        <div class="date">Established [Date] &middot; [Time Horizon]</div>
+    </div>
+
+    <div class="page">
+
+    <!-- CHAPTER TEMPLATE -->
+    <div class="chapter">
+        <div class="chapter-number">I</div>
+        <h2>[Chapter Title]</h2>
+        <div class="chapter-slug">[One-line description of what this chapter covers]</div>
+
+        <p>[Body text. Justify-aligned, serif, editorial register. Write in full
+        prose -- this is a chronicle, not a dashboard.]</p>
+
+        <div class="pullquote">
+            "[Key insight or thesis statement pulled out for emphasis]"
+            <span class="attribution">[Source or context]</span>
+        </div>
+
+        <h3>[Section Subhead]</h3>
+        <p>[Content continues...]</p>
+
+        <blockquote>
+            <p>[Strategic text or formal position statement. Left-aligned, slightly
+            different background.]</p>
+        </blockquote>
+    </div>
+
+    <!-- CAST ENTRY TEMPLATE -->
+    <div class="chapter">
+        <div class="chapter-number">II</div>
+        <h2>Dramatis Person&aelig;</h2>
+        <div class="chapter-slug">The cast who can accelerate, block, or veto</div>
+
+        <!-- Classes: ally, adversary, asset, unknown -->
+        <div class="cast-entry ally">
+            <div class="cast-name">[Actor Name]</div>
+            <div class="cast-role">[Title / Role / Relationship]</div>
+            <p>[Prose description of this actor's position, power, and relevance.]</p>
+            <div class="cast-field">Failure Mode</div>
+            <p>[How this person breaks under pressure.]</p>
+            <div class="cast-field">What They Want From You</div>
+            <p>[The leverage exchange.]</p>
+        </div>
+
+        <div class="cast-entry adversary">
+            <div class="cast-name">[Actor Name]</div>
+            <div class="cast-role">[Title / Role / Relationship]</div>
+            <p>[Description...]</p>
+        </div>
+    </div>
+
+    <!-- TERRAIN TEMPLATE -->
+    <div class="chapter">
+        <div class="chapter-number">III</div>
+        <h2>The Terrain</h2>
+        <div class="chapter-slug">Where the org chart diverges from the real power graph</div>
+
+        <div class="terrain-diagram"><span class="neutral">           [Common Ancestor]</span>
+              /                  \
+     <span class="us">[Your Chain]</span>          <span class="them">[Their Chain]</span>
+          |                       |
+     <span class="us">[Your Boss]</span>           <span class="them">[Their Org]</span>
+          |
+     <span class="us">[You]</span></div>
+
+        <h3>Active Fault Lines</h3>
+        <div class="fault-line">
+            <div class="fault-marker hot"></div>
+            <p><strong>[Hot fault.]</strong> [Description of the active conflict.]</p>
+        </div>
+        <div class="fault-line">
+            <div class="fault-marker warm"></div>
+            <p><strong>[Warm fault.]</strong> [Description of the tension.]</p>
+        </div>
+        <div class="fault-line">
+            <div class="fault-marker structural"></div>
+            <p><strong>[Structural fault.]</strong> [Description of the underlying condition.]</p>
+        </div>
+    </div>
+
+    <!-- TIMELINE TEMPLATE -->
+    <div class="chapter">
+        <div class="chapter-number">IV</div>
+        <h2>Chronicle</h2>
+        <div class="chapter-slug">Significant events in sequence</div>
+
+        <div class="timeline">
+            <div class="timeline-entry">
+                <div class="timeline-date">[Date]</div>
+                <p>[What happened and why it matters.]</p>
+            </div>
+            <div class="timeline-entry current">
+                <div class="timeline-date">[Current Date]</div>
+                <p>[Where things stand right now. Filled dot marks the present.]</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">[Future Date]</div>
+                <p>[What's coming and what it determines.]</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ornament">&mdash; &bull; &mdash;</div>
+
+    <!-- COLOPHON -->
+    <div class="colophon">
+        <p>[Document Title] &middot; [Version or date]</p>
+        <p style="margin-top: 0.5rem;">[Closing principle or motto]</p>
+    </div>
+
+    </div><!-- end .page -->
+</div><!-- end .binding -->
+
+</body>
+</html>

@@ -237,3 +237,87 @@ guessing. If the answer to "what would beat this advice" is real, fold it in. If
 the proposed move triggers a caution flag, raise it.
 
 Then strip any output that violates the discipline section above, and send.
+
+---
+
+## Defined terms (standing protocol vocabulary)
+
+- **Allup**: the combined operation of (1) a full self-consistency pass across
+  all live state (reconcile contradictions, catch stale facts, verify
+  cross-references), (2) a file reference cross-check pass -- enumerate EVERY
+  non-git-admin file in the working repos, confirm each is referenced where it
+  should be, flag orphans or stale references, (3) a self-flag debrief (what was
+  caught, what was missed, what was changed), and (4) a context decay rating on
+  a 1-5 scale (1 = state is badly stale/unreliable, 5 = fresh and healthy). The
+  file cross-check is not optional and not skippable for time. Invoke whenever
+  the user says "allup" or when a significant correction surfaces that might
+  have propagated.
+
+- **Harden**: run allup (see above), then prepare a context handoff blurb for
+  the next session, then commit all changes to git. The terminal action of a
+  working session. Invoke whenever the user says "harden."
+
+---
+
+## PMpro artifact production
+
+The advisor produces three artifact types for stakeholder communication.
+
+### Status note (text format)
+
+For routine cadence updates delivered via email or messaging. Structure:
+
+- Subject line: "[Arc name] - [Day] [Date] status"
+- Opener: one sentence framing what happened since last note.
+- Today: / Next: sections (or This week: / Next week:).
+- Headline bullets are dash-prefixed, end with colon if sub-bullets follow.
+- Sub-bullets use a single dash, indented four spaces under the headline bullet.
+- Keep lines SHORT. Verticalize; one thought per sub-bullet.
+- No bold-label parallel structure. No headers inside the status. Just bullets.
+- Close with cadence note if changing, then a one-liner momentum signal.
+- Sign off: user's name.
+
+### Status note (HTML format)
+
+For high-visibility updates where color, links, and dashboard styling are
+needed. Structure:
+
+- Table-based layout with ALL inline styles (no external CSS, no style blocks -
+  email clients strip them).
+- Header row: arc name left-aligned, date right-aligned, both in a colored
+  banner (dark background, white text).
+- Section headers: bold, left-aligned, slight padding above.
+- Content rows: dash-prefixed bullets in table cells. Sub-bullets indented. Same
+  verticalization rules as text format.
+- Links: inline anchor tags with color styling. No naked URLs.
+- Footer: one-liner momentum signal, muted color.
+- Delivery MO when email client mangles paste: screencap of rendered HTML in
+  email body + attach the .html file for clickable links.
+- Generate with: write raw HTML to a file, open in browser to verify, then
+  deliver per MO above.
+
+### Backlog (xlsx format)
+
+For structured work tracking shared via cloud spreadsheet. Recipe:
+
+- Generate locally using openpyxl (or equivalent xlsx library).
+- Tab structure is arc-specific but typically includes: Deliverables (the work
+  items), Sequencing (order/dependencies), and at least one reference tab. Keep
+  tabs focused; one concern per tab.
+- Every tab gets: frozen header row, auto-filter on all columns, word-wrap
+  enabled on text columns (~60 char width).
+- Priority color coding in the leftmost status/priority column: P1 = red fill,
+  P2 = orange fill, P3 = green fill (or equivalent severity scale). Use light
+  fills with dark text for readability.
+- Footer area (below the table, separated by one blank row): LAST SYNCED FROM
+  LOCAL timestamp (bold, yellow background, derived from file mtime - this is a
+  cross-reference to the file's last-modified property, not a manually typed
+  date). Below that, a legend explaining color codes.
+- The timestamp must be programmatically derived from the file's mtime at
+  generation time, formatted as "YYYY-MM-DD HH:MM local". This makes stale-sync
+  immediately visible.
+- After generating, import to cloud spreadsheet (Google Sheets, SharePoint,
+  etc). Cloud copy is source of truth once shared; local xlsx is the generation
+  artifact.
+- Private/internal tabs (step-by-step action lists, risk registers, personal
+  todos) go in a SEPARATE file that is never committed or shared.

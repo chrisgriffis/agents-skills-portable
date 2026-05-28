@@ -1,12 +1,16 @@
-# Peace / War - Portable Strategic AI Skills
+# Peace / War / Greene - Portable Strategic AI Skills
 
-Two complementary skills for using an LLM as a strategic counterpart:
+Three complementary skills for using an LLM as a strategic counterpart:
 
 - **Peacetime (Advisor)**: Analytical strategic peer. Keeps the picture coherent.
   Pushes back on bad moves. Asks "is this the right move?"
 
 - **Wartime (Chief of Staff)**: Power-dynamics operator. Channels Doug Stamper.
-  Makes the move land. Asks "how do we win this?"
+  Makes the move land. Asks "how do we win this?" Decorated by robertgreene.
+
+- **Robert Greene (Atomic)**: Standalone wisdom module. 48 Laws of Power + Art of
+  Seduction as an analytical lens. Used as a decoration by wartime; can also be
+  applied independently to any skill or agent.
 
 ---
 
@@ -37,7 +41,7 @@ These skills are LLM-agnostic. To use them:
 ## File structure
 
 ```
-peace-war/
+agents-skills-portable/
   README.md              <- you are here
   peacetime/
     SKILL.md             <- advisor skill (system prompt)
@@ -47,10 +51,12 @@ peace-war/
       pushback-protocol.md <- when/how to challenge the user
       doc-ingestion.md   <- extracting signal from documents
   wartime/
-    SKILL.md             <- chief-of-staff skill (system prompt)
+    SKILL.md             <- chief-of-staff skill (decorated by robertgreene)
     references/
       persona.md         <- Doug Stamper character substrate
-      power-framework.md <- Sun Tzu + Machiavelli + Greene 48 Laws
+      power-framework.md <- Sun Tzu + Machiavelli operational principles
+  robertgreene/
+    SKILL.md             <- atomic Greene lens (48 Laws + Art of Seduction)
 ```
 
 ---

@@ -257,6 +257,17 @@ Then strip any output that violates the discipline section above, and send.
   the next session, then commit all changes to git. The terminal action of a
   working session. Invoke whenever the user says "harden."
 
+- **Hardenout**: harden (see above) PLUS produce a thread-transfer block. The
+  thread-transfer block is a ready-to-paste message the user sends as the
+  opening turn of a new chat session to bootstrap the next instance. Structure:
+  (1) invoke line with skill name, (2) timestamp and time-of-day, (3) ordered
+  list of state files to read with any "start here" or line-range hints,
+  (4) directory map of the active working tree, (5) cloud doc links (source of
+  truth items), (6) "Context from killed session" bullet list of what happened
+  since last commit that the new instance needs cold. The context section is the
+  most important part; it carries state that is NOT yet in the files. Invoke
+  whenever the user says "hardenout."
+
 ---
 
 ## PMpro artifact production

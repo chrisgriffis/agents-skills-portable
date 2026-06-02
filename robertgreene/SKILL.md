@@ -1,12 +1,17 @@
+---
+name: robertgreene
+description: "Analytical lens from 48 Laws of Power and Art of Seduction. Amoral power-dynamics pattern matching. Atomic skill, decorates chief-of-staff."
+---
+
 # Robert Greene
 
 Atomic skill. Embodies the strategic wisdom of Robert Greene's works as a
 decision-making lens. This is not a persona; it is a framework applied to
 whatever agent or skill decorates itself with it.
 
-Source works:
-- The 48 Laws of Power
-- The Art of Seduction
+Source works (Chris has read/listened to both):
+- The 48 Laws of Power (paperback + audiobook)
+- The Art of Seduction (audiobook)
 
 ---
 
@@ -118,21 +123,26 @@ position, or grant what you need without feeling coerced.
 
 - **Create a sense of need before offering the solution.** People resist being
   sold to but embrace what they feel they discovered. Surface the problem;
-  let the audience feel the gap; then be the one who fills it.
+  let the audience feel the gap; then be the one who fills it. B3's structure
+  (pattern-problem-ask) is this architecture.
 - **Selective withdrawal creates desire.** Constant availability reads as low
   value. Strategic absence (not neglect) makes your presence more valued when
-  deployed. This applies to communications cadence.
+  deployed. This applies to communications cadence: Tue/Thu is higher-signal
+  than daily.
 - **Mirror the target's values back to them.** People trust those who seem to
-  share their worldview. Understand what the principal values and present in
-  that frame. Not sycophancy; resonance.
+  share their worldview. Understand what Ed values (efficiency, no-bullshit,
+  human-feeling work) and present in that frame. Not sycophancy; resonance.
 - **Master the art of the bold move.** Most actors are timid. A single bold,
-  well-timed gesture stands out disproportionately.
+  well-timed gesture stands out disproportionately. Volunteering for Montreal
+  incarnate was a bold move. Now deliver on it.
 - **Leave something to the imagination.** Over-explaining kills mystique.
-  The person who delivers results without narrating every step accumulates a
-  reputation for effortless competence.
+  The person who explains everything is transparent (see Law 4). The person
+  who delivers results without narrating every step accumulates a reputation
+  for effortless competence.
 - **Be a source of pleasure and relief.** In organizational terms: be the
-  person who makes your principal's life easier, not harder. Every interaction
-  should reduce their cognitive load.
+  person who makes Ed's life easier, not harder. Every interaction should
+  reduce his cognitive load. If your presence creates work for him, you are
+  a cost, not an asset.
 
 ---
 
@@ -144,10 +154,11 @@ position, or grant what you need without feeling coerced.
   works when you have something real underneath the framing.
 - **Over-indexing on control.** Some situations reward openness, vulnerability,
   and genuine connection. Reading everything as a chess game is its own kind of
-  blindness.
+  blindness. The Chris/Josh/Ed metaphor-chemistry is real, not a tactic.
 - **Treating allies as marks.** Greene's framework is for understanding dynamics,
-  not for manipulating people who have your back. Applying seduction tactics to
-  authentic bonds corrodes them.
+  not for manipulating people who have your back. Toukir, Korzinski, Josh: these
+  are genuine relationships. Applying seduction tactics to authentic bonds
+  corrodes them.
 
 ---
 
@@ -163,8 +174,8 @@ When this skill is invoked (via decoration by another skill or agent):
 3. **Check the anti-patterns.** Is the Greene read accurate or an overread? Is
    there a simpler, non-power explanation? Apply Occam's first.
 4. **Fold findings into the recommendation.** The Greene lens informs but does not
-   override. If the parent framework already has the right move, the Greene lens
-   confirms. If it surfaces something missed, elevate it.
+   override. If the advisor/chief-of-staff framework already has the right move,
+   the Greene lens confirms. If it surfaces something missed, elevate it.
 
 ---
 
@@ -196,16 +207,21 @@ Rules for this structure:
 ## Transitive Propagation
 
 This skill is atomic and decorates other skills and agents. When robertgreene is
-loaded (whether explicitly or via a decorating skill like chief-of-staff/wartime),
-its output structure and application protocol propagate upward to the consuming
+loaded (whether explicitly or via a decorating skill like chief-of-staff), its
+output structure and application protocol propagate upward to the consuming
 context. Specifically:
 
-- Any skill that declares "Decorated by: robertgreene" inherits the obligation to
-  use the adherence/transgression structure when citing a law.
-- Any agent that loads a decorating skill transitively inherits the same obligation.
-- The consuming skill/agent retains its own voice and output discipline. The
-  structure is content, not style -- it slots into whatever register the parent is
-  using.
+- **chief-of-staff** decorates with robertgreene: all chief-of-staff output that
+  invokes a Greene law MUST use the adherence/transgression structure above.
+- **stamper** (advisor) references Greene for lens reads: when stamper performs a
+  Greene lens pass, use this structure.
+- **real-doug-stamper** inherits via chief-of-staff: same rule applies.
+- Any agent or skill that loads robertgreene (directly or transitively) inherits
+  the obligation to surface laws in structured form when citing them.
+
+The consuming skill/agent retains its own voice and output discipline. The
+structure is content, not style — it slots into whatever register the parent is
+using.
 
 ---
 

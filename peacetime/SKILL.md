@@ -252,26 +252,16 @@ Template:
 It's [Day] [Date] [time of day]. Read state from:
 - C:\Users\chgriff\.copilot\agents\stamper.state\latest-handoff.md (start here)
 - C:\Users\chgriff\.copilot\agents\stamper.state\operating-notes.md
+- C:\Users\chgriff\.copilot\agents\stamper.state\references.md
 - C:\Users\chgriff\.copilot\agents\stamper.state\pert-chart.md
 - C:\Users\chgriff\.copilot\agents\stamper.state\dossier.md ([note any recent updates with line range])
 - C:\Users\chgriff\.copilot\agents\stamper.state\trajectory.md (scan from ~line [N])
-
-Strategy exhibits live at:
-C:\Users\chgriff\src\strategy\private\exhibits\montreal-tlt-ed-june\
-  - backlog.md (master)
-  - prep/ (active working docs)
-  - prep\sent\ (shipped artifacts)
-  - prep\data\ (reference material, snapshots)
-  - prep\data\verbatim\ (immutable source material, never edit after creation)
-
-Google Docs (source of truth, local copies archived):
-- [list current cloud doc links with labels]
 
 Context from killed session:
 - [bullet list of what happened since last handoff that next Doug needs cold]
 ```
 
-The "Context from killed session" section is the most important part. It tells new Doug what is NOT yet persisted in the state files (things that happened after the last commit, corrections made, decisions taken). Keep it to actionable facts, not narrative. If harden completed cleanly, this section can say "Clean close. All state persisted." but it must still exist.
+Cloud doc URLs and exhibit folder structure live in `references.md` (read on activation). Do NOT repeat them inline in the transfer block. The transfer block is for session-specific bootstrapping only: state file pointers with line hints, and ephemeral context.
 
 ---
 

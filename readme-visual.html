@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategy Framework - Portable</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface-raised: #1c2128;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --pink: #f778ba;
+  --red: #f85149;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6;
+  padding: 2.5rem; max-width: 1100px; margin: 0 auto;
+}
+h1 {
+  font-size: 2.8rem; font-weight: 800; margin-bottom: 0.3rem;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.subtitle { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
+h2 {
+  font-size: 1.35rem; color: var(--accent); margin-top: 3rem; margin-bottom: 1rem;
+  padding-bottom: 0.4rem; border-bottom: 1px solid var(--border);
+}
+h3 { font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 0.9rem; font-size: 0.92rem; }
+hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+code {
+  background: var(--surface-raised); padding: 0.15em 0.4em; border-radius: 4px;
+  font-size: 0.82em; font-family: 'JetBrains Mono', 'Cascadia Code', monospace; color: var(--accent);
+}
+ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+li { margin-bottom: 0.3rem; font-size: 0.9rem; }
+li::marker { color: var(--text-muted); }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+th {
+  text-align: left; padding: 0.6rem 0.8rem; background: var(--surface-raised);
+  border: 1px solid var(--border); color: var(--text-muted); font-weight: 600;
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+}
+td { padding: 0.6rem 0.8rem; border: 1px solid var(--border); vertical-align: top; }
+tr:hover td { background: var(--surface); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.25rem; transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card h3 { margin: 0 0 0.5rem 0; font-size: 1rem; }
+.card p { color: var(--text-muted); font-size: 0.82rem; margin: 0; }
+.card .icon { font-size: 1.4rem; margin-bottom: 0.6rem; display: block; }
+
+.layer {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.2rem 1.4rem; border-left: 5px solid var(--accent); margin-bottom: 0.5rem;
+}
+.layer.l1 { border-left-color: var(--purple); }
+.layer.l2 { border-left-color: var(--green); }
+.layer.l3 { border-left-color: var(--orange); }
+.layer-tag {
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; margin-bottom: 0.3rem;
+}
+.layer.l1 .layer-tag { color: var(--purple); }
+.layer.l2 .layer-tag { color: var(--green); }
+.layer.l3 .layer-tag { color: var(--orange); }
+.layer h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+.layer p { color: var(--text-muted); font-size: 0.82rem; margin: 0; }
+.arrow { text-align: center; color: var(--border); font-size: 1.2rem; margin: 0.3rem 0; letter-spacing: 0.3em; }
+
+.tree {
+  font-family: 'JetBrains Mono', 'Cascadia Code', monospace; font-size: 0.78rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.25rem 1.5rem; margin: 1.25rem 0; line-height: 1.9;
+  white-space: pre; overflow-x: auto; color: var(--text-muted);
+}
+.tree .hi { color: var(--accent); }
+.tree .cm { color: #484f58; }
+
+.pill {
+  display: inline-block; padding: 0.1em 0.55em; border-radius: 10px;
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+}
+.pill-blue { background: rgba(88,166,255,0.12); color: var(--accent); }
+.pill-green { background: rgba(63,185,80,0.12); color: var(--green); }
+.pill-orange { background: rgba(210,153,34,0.12); color: var(--orange); }
+.pill-purple { background: rgba(188,140,255,0.12); color: var(--purple); }
+
+.callout {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1rem 1.25rem; margin: 1.25rem 0; border-left: 4px solid var(--accent);
+}
+.callout .cl-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; color: var(--accent); }
+.callout p { font-size: 0.85rem; margin: 0; }
+.callout.warn { border-left-color: var(--orange); }
+.callout.warn .cl-title { color: var(--orange); }
+
+footer {
+  margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+  text-align: center; color: var(--text-muted); font-size: 0.78rem;
+}
+</style>
+</head>
+<body>
+
+<h1>Strategy Framework</h1>
+<p class="subtitle">A portable architecture for persistent strategic awareness. Three-layer document model + AI agent infrastructure + state hygiene protocols. Plug in your specifics; the framework does the rest.</p>
+
+<hr>
+
+<h2>What This Is</h2>
+<p>Not a template collection. Not a prompt library. This is a <strong>complete information architecture</strong> for managing multi-actor strategic situations across months or years, using an AI agent as a persistent memory and analytical counterpart.</p>
+<p>You supply: your actors, your terrain, your arcs, your goals. The framework supplies: the container structure, the merge discipline, the state hygiene protocols, the defect filters, the visual layer, and the agent behavior definitions that keep the whole thing honest across sessions.</p>
+
+<div class="callout">
+  <div class="cl-title">The problem it solves</div>
+  <p>No single document can serve as both "what is my 3&ndash;5 year strategic position" and "what did Actor X say on Tuesday." Different time horizons and update frequencies demand different containers&mdash;connected by cross-references and a strict merge direction. Without this structure, strategic context degrades into a pile of notes that cannot predict anything.</p>
+</div>
+
+<h2>Three-Layer Architecture</h2>
+<p>Information is stored in layers with different time horizons, update cadences, and audiences. Lower layers feed upper layers. Never the reverse.</p>
+
+<div class="layer l1">
+  <div class="layer-tag">Layer 1 &mdash; Career Arc Integrator</div>
+  <h4>Long-Horizon Strategy Document</h4>
+  <p>Structured sections. Kind and unkind reads. Evolution tracking with dated entries showing how understanding changes. 3&ndash;5 year horizon. Updated after strategic shifts or campaign postmortems. Contains: objective, self-assessment, cast, terrain, prior art, technical substance, active arcs.</p>
+</div>
+<div class="arrow">&darr; integrates from</div>
+<div class="layer l2">
+  <div class="layer-tag">Layer 2 &mdash; Lifetime Dossier (Agent State)</div>
+  <h4>Running People &amp; Relationship Memory</h4>
+  <p>Current reads on actors. Relationship dynamics, behavioral patterns, operating preferences. Updated every working session by the AI agent. Persists across all campaigns. Role-tenure horizon. This is where freshness lives.</p>
+</div>
+<div class="arrow">&darr; integrates from</div>
+<div class="layer l3">
+  <div class="layer-tag">Layer 3 &mdash; Campaign Tactical Dossier</div>
+  <h4>Push-Specific Operational State</h4>
+  <p>What you owe, to whom, by when. Deliverable tracking, logistics, ship targets. References Layer 2 entries by person-ID rather than duplicating them. Created per campaign. Frozen after event. Postmortem folds into Layer 1.</p>
+</div>
+
+<div class="callout">
+  <div class="cl-title">&#8593; Merge direction: always upward</div>
+  <p>Tactical summarizes into lifetime. Lifetime distills into career arc. Never duplicate downward. Contradictions between early and late reads are kept with dates&mdash;the evolution IS the insight.</p>
+</div>
+
+<h2>AI Skills Stack</h2>
+<p>Three complementary behavioral definitions that shape how the agent operates. Each is a standalone instruction set; they compose by decoration.</p>
+
+<div class="grid">
+  <div class="card">
+    <span class="icon">&#9733;</span>
+    <h3>Peacetime <span class="pill pill-blue">advisor</span></h3>
+    <p>Analytical strategic peer. Arc tracking, self-challenge before responding, pushback protocol, caution detection, document ingestion, research discipline. The procedural backbone.</p>
+  </div>
+  <div class="card">
+    <span class="icon">&#9876;</span>
+    <h3>Wartime <span class="pill pill-orange">chief of staff</span></h3>
+    <p>Power-dynamics operator. Active maneuvering against specific actors. Crafts communications designed to shift leverage. Decorated by the Greene lens.</p>
+  </div>
+  <div class="card">
+    <span class="icon">&#10070;</span>
+    <h3>Robert Greene <span class="pill pill-purple">atomic lens</span></h3>
+    <p>48 Laws of Power + Art of Seduction as analytical pattern-matching. Amoral. Decorates wartime; can also be applied independently to any skill.</p>
+  </div>
+</div>
+
+<table>
+  <tr><th>Situation</th><th>Skill</th></tr>
+  <tr><td>Planning, sense-making, coordination, document analysis</td><td>Peacetime</td></tr>
+  <tr><td>Active maneuvering, crafting comms to shift dynamics</td><td>Wartime</td></tr>
+  <tr><td>"How should I think about this?"</td><td>Peacetime</td></tr>
+  <tr><td>"How do I win this?"</td><td>Wartime</td></tr>
+  <tr><td>Ambiguous</td><td>Peacetime (default)</td></tr>
+</table>
+
+<h2>State Hygiene Protocols</h2>
+<p>The AI agent has no persistent memory except what it writes to disk. Sessions end; context windows compress; models hallucinate confidence about things they haven't verified. These protocols exist to detect and correct the specific failure modes of LLM-based persistent-state systems.</p>
+
+<h3>Allup <span class="pill pill-blue">verification</span></h3>
+<p>Seven-step integrity protocol. Verifies the entire state tree is self-consistent and current, then produces a calibrated confidence rating. Invoked on demand or whenever a significant correction surfaces.</p>
+
+<table>
+  <tr><th>Step</th><th>What it does</th><th>Defect it catches</th></tr>
+  <tr><td>0. Ground rules</td><td>Psychologically primes executor: step 5 will catch skipped work</td><td>Corner-cutting, lazy assumptions</td></tr>
+  <tr><td>1. Self-consistency pass</td><td>Read ALL state files with tool calls (not from memory)</td><td>Cross-file contradictions, stale facts</td></tr>
+  <tr><td>2. File reference cross-check</td><td>Enumerate every file; confirm all pointers are valid</td><td>Orphans, phantom references</td></tr>
+  <tr><td>3. Cascade check &amp; FIX</td><td>Detect inconsistencies AND remediate before proceeding</td><td>Temporal drift, path rot, downstream claims</td></tr>
+  <tr><td>4. Self-flag debrief</td><td>Report what was caught, missed, changed (with specifics)</td><td>Silent failures, undisclosed gaps</td></tr>
+  <tr><td>5. Hallucination challenge</td><td>"Did I actually do steps 1&ndash;3 or am I about to fabricate a good score?"</td><td>Manufactured confidence</td></tr>
+  <tr><td>6. Context decay rating</td><td>1&ndash;5 score on two independent failure surfaces</td><td>Undetected staleness, compaction artifacts</td></tr>
+</table>
+
+<h3>Dual-Surface Decay Model</h3>
+<p>The context decay rating measures two <em>independent</em> failure surfaces. A session can be healthy on one and degraded on the other.</p>
+
+<div class="grid">
+  <div class="card">
+    <span class="icon">&#128196;</span>
+    <h3>Surface A: Document Freshness</h3>
+    <p>Are state files verified-current via tool calls this turn? Degrades with time since last read and unverified agent edits. Unverified files cap rating at 3/5.</p>
+  </div>
+  <div class="card">
+    <span class="icon">&#129504;</span>
+    <h3>Surface B: Thread-Context Fidelity</h3>
+    <p>Has the LLM&rsquo;s own context window degraded during this session? Long sessions trigger compaction (lossy summarization of earlier turns). Model may confidently fabricate details from compacted memory.</p>
+  </div>
+</div>
+
+<div class="callout warn">
+  <div class="cl-title">Why two surfaces matter</div>
+  <p>Previous versions conflated "I read the files recently" with "my overall context is reliable." But a model can have all files fresh (Surface A = 5/5) while its own recall of what happened at turn 3 is unreliable because those turns have been compacted (Surface B = 2/5). Scoring both independently prevents false confidence.</p>
+</div>
+
+<h3>Harden <span class="pill pill-green">session close</span></h3>
+<p>Terminal action of every working session. Ensures nothing is lost at the session boundary.</p>
+<ul>
+  <li>Run full allup (all 7 steps, no abbreviation)</li>
+  <li>Sync operational state to archival copy in strategy repo</li>
+  <li>Write latest-handoff.md (overwrite, never append) &mdash; the bootstrap for next session</li>
+  <li>Commit strategy repo (feature branch &rarr; <code>--no-ff</code> merge &rarr; push)</li>
+  <li>Produce thread-transfer block (paste-ready cold-start message for next session)</li>
+</ul>
+
+<h3>Hardenout <span class="pill pill-green">session close + export</span></h3>
+<p>Harden (all steps above) plus portable export: sync meta, templates, agent definitions, and skill definitions to the portable repo. Machine-loss survivability.</p>
+
+<h3>Defect Dimensions</h3>
+<p>The protocols are designed to catch failures across seven orthogonal dimensions:</p>
+
+<table>
+  <tr><th>Dimension</th><th>Example failure</th><th>Detection mechanism</th></tr>
+  <tr><td>Temporal drift</td><td>PERT chart says "TODAY" for yesterday&rsquo;s date</td><td>Allup step 3 (cascade check)</td></tr>
+  <tr><td>Cross-file inconsistency</td><td>Dossier says X reports to A; trajectory says B</td><td>Allup step 1 (self-consistency pass)</td></tr>
+  <tr><td>Orphan/phantom references</td><td>README points to a file that was moved or deleted</td><td>Allup step 2 (file cross-check)</td></tr>
+  <tr><td>Hallucinated confidence</td><td>Agent reports "4/5 freshness" without having read files</td><td>Allup step 5 (hallucination challenge)</td></tr>
+  <tr><td>Thread-context decay</td><td>Agent fabricates details from compacted early turns</td><td>Allup step 6 Surface B</td></tr>
+  <tr><td>Cascade-on-fix errors</td><td>Correcting a name in one file invalidates three others</td><td>Allup step 3 (fix before proceeding)</td></tr>
+  <tr><td>Session-boundary amnesia</td><td>New session has zero context from predecessor</td><td>Harden steps 3+5 (handoff + transfer block)</td></tr>
+</table>
+
+<div class="callout">
+  <div class="cl-title">Why this exists</div>
+  <p>LLMs in persistent-state configurations exhibit a specific failure mode: they become more confident as the session lengthens while simultaneously becoming less accurate (due to context compression). The allup protocol forces verification at exactly the moments the agent is most likely to be wrong&mdash;session boundaries and after corrections. The hallucination challenge step is adversarial to the agent&rsquo;s own incentive to report success, which is the point.</p>
+</div>
+
+<h2>Agent Persistent State</h2>
+<p>The AI agent maintains operational state across sessions via files it reads on activation and writes during work. This is Layer 2 in live form.</p>
+
+<table>
+  <tr><th>File</th><th>Purpose</th><th>Update cadence</th></tr>
+  <tr><td>dossier.md</td><td>Lifetime actor register (people, relationships, patterns)</td><td>Every session</td></tr>
+  <tr><td>trajectory.md</td><td>Master arc + sub-tracks + watch items</td><td>Every session</td></tr>
+  <tr><td>operating-notes.md</td><td>Craft learnings about advising this specific user</td><td>When behavioral preference surfaces</td></tr>
+  <tr><td>latest-handoff.md</td><td>Rolling bootstrap (overwrite, never append)</td><td>Every harden</td></tr>
+  <tr><td>pert-chart.md</td><td>Day-by-day execution plan for current push</td><td>Daily during active campaigns</td></tr>
+</table>
+
+<h3>Operational / Archival Split</h3>
+<p>Agent state exists in two copies. Operational (hot) is read/written during sessions&mdash;may be dirty, ahead of archival. Archival (cold) is committed to the strategy repo during harden. They are explicitly allowed to drift; operational wins on conflicts. This avoids commit-on-every-write noise while maintaining recovery capability.</p>
+
+<h2>The Visual Layer</h2>
+<p>Every document gets a visual HTML companion. Not a dashboard. An editorial presentation that makes the strategic picture legible at a glance while signaling the weight and gravity of the content.</p>
+
+<div class="grid">
+  <div class="card">
+    <span class="icon">&#128214;</span>
+    <h3>Prestige Register</h3>
+    <p>Coffee-table book, not Jira board. Serif or considered sans typography, generous whitespace, gold accents. The binding should crackle.</p>
+  </div>
+  <div class="card">
+    <span class="icon">&#127912;</span>
+    <h3>Three-Tier Redaction</h3>
+    <p>Full (internal weapon) &rarr; Sanitized (framework visible, names replaced with role labels) &rarr; Deep-redacted (structure only, Unicode full blocks).</p>
+  </div>
+  <div class="card">
+    <span class="icon">&#128424;</span>
+    <h3>Print-Ready</h3>
+    <p>Embedded @media print CSS. Extra left gutter for binding. Page breaks on chapters. PDF generated from HTML via headless browser&mdash;never maintained separately.</p>
+  </div>
+  <div class="card">
+    <span class="icon">&#9889;</span>
+    <h3>Self-Contained</h3>
+    <p>Single file, inline styles only, no external dependencies. Opens in any browser on any machine. Zero build step.</p>
+  </div>
+</div>
+
+<h2>Operational Conventions</h2>
+
+<h3>Two Registers (Do Not Cross)</h3>
+<table>
+  <tr><th></th><th>Full prose docs</th><th>Paste-in / copy-paste contexts</th></tr>
+  <tr><td>Format</td><td>Markdown, full editorial</td><td>Plain text, key: + bullets</td></tr>
+  <tr><td>Punctuation</td><td>Whatever it needs</td><td>ASCII only (no em-dashes, curly quotes)</td></tr>
+  <tr><td>Length</td><td>Whatever it needs</td><td>~1/3 natural length</td></tr>
+  <tr><td>Voice</td><td>Considered, written</td><td>Telegraphic, scannable</td></tr>
+</table>
+
+<h3>Cast Entry Schema</h3>
+<p>Every actor gets structured fields. The structure forces rigorous thinking and makes updates surgical.</p>
+<div class="tree">Role / actual power:
+How they got here / what they're protecting:
+Failure mode(s):
+Current relationship to you:
+What they want that you could plausibly give them:
+<span class="hi">What they fear your initiative might trigger:</span>  <span class="cm">&lt;-- most important field</span>
+Who they actually listen to:
+Last meaningful interaction / signal:
+Notes:</div>
+
+<h3>Hard Rules</h3>
+<ul>
+  <li>Write the unkind read. Always. Charitable framing is how the dossier stops predicting things.</li>
+  <li>Capture priors BEFORE new data arrives (lets you see what changed vs. confirmed).</li>
+  <li>Radioactive language stays in the dossier. Never leaks into org-facing comms.</li>
+  <li>The dossier predicts; it does not prescribe. When it stops predicting, update the model.</li>
+  <li>Evolution tracking: don't overwrite old reads. Date them and add new ones alongside.</li>
+</ul>
+
+<h2>Repository Structure</h2>
+
+<div class="tree"><span class="hi">agents-skills-portable/</span>
+  README.md                        <span class="cm">-- this repo's markdown readme</span>
+  readme-visual.html               <span class="cm">-- this file</span>
+  <span class="hi">peacetime/</span>                       <span class="cm">-- advisor skill</span>
+    SKILL.md                       <span class="cm">-- system prompt (procedural discipline)</span>
+    references/                    <span class="cm">-- arc-tracking, self-challenge, pushback, doc-ingestion</span>
+  <span class="hi">wartime/</span>                         <span class="cm">-- chief-of-staff skill</span>
+    SKILL.md                       <span class="cm">-- system prompt (power dynamics operator)</span>
+    references/                    <span class="cm">-- persona, power-framework</span>
+  <span class="hi">robertgreene/</span>                    <span class="cm">-- atomic analytical lens</span>
+    SKILL.md                       <span class="cm">-- 48 Laws + Art of Seduction</span>
+  <span class="hi">strategy-workspace/</span>              <span class="cm">-- THE FRAMEWORK</span>
+    README.md                      <span class="cm">-- full framework documentation</span>
+    <span class="hi">templates/</span>                     <span class="cm">-- starter files for adopters</span>
+      stamper.agent.md             <span class="cm">-- agent definition template (peacetime)</span>
+      real-doug-stamper.agent.md   <span class="cm">-- agent definition template (wartime)</span>
+      visual-dossier.html          <span class="cm">-- prestige visual HTML template</span></div>
+
+<h2>Adopting the Framework</h2>
+<p>To use this for your own strategic work:</p>
+<ul>
+  <li>Clone this repo. It is your machine-loss insurance and your framework reference.</li>
+  <li>Create a local strategy repo (private, never shared). This holds your Layer 1 + exhibits.</li>
+  <li>Create an agent state folder (wherever your AI tooling expects it). This is Layer 2 hot copy.</li>
+  <li>Adapt the agent templates in <code>strategy-workspace/templates/</code> to point at your state paths.</li>
+  <li>Feed the appropriate <code>SKILL.md</code> as instruction context to your AI sessions.</li>
+  <li>Populate your dossier with actors. The cast schema tells you what fields to fill.</li>
+  <li>Run allup periodically to keep state honest. Harden at every session close.</li>
+</ul>
+
+<div class="callout">
+  <div class="cl-title">What you get without rebuilding anything</div>
+  <p>The three-layer architecture. The merge-direction discipline. The allup/harden hygiene protocols with dual-surface decay detection. The self-challenge and pushback protocols. The visual layer with three-tier redaction. The cast schema that forces rigorous actor modeling. The fold-in workflow. The two-register convention. The session-continuity mechanism (handoff + thread-transfer block). All of it transfers. You supply the specifics.</p>
+</div>
+
+<h2>When to Use This</h2>
+
+<div class="grid">
+  <div class="card" style="border-left: 3px solid var(--green);">
+    <h3>Appropriate</h3>
+    <p>Multiple actors with non-aligned interests. Career-level stakes. Months-to-years horizon. Strategic picture too complex for one document. AI counterpart maintaining state across sessions.</p>
+  </div>
+  <div class="card" style="border-left: 3px solid var(--red);">
+    <h3>Overkill</h3>
+    <p>Simple project management. Technical work with no political dimension. Short-term tactical problems. Fewer than 3 relevant actors. Situations where the answer is obvious.</p>
+  </div>
+</div>
+
+<footer>
+  <p>Portable Strategy Framework &bull; Architecture + Skills + Protocols &bull; Personal use, adapt freely</p>
+</footer>
+
+</body>
+</html>

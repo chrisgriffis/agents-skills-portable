@@ -1,40 +1,76 @@
-# Peace / War / Greene - Portable Strategic AI Skills
+# Strategy Framework (Portable)
 
-Three complementary skills for using an LLM as a strategic counterpart:
+> **Visual companion:** Open [`readme-visual.html`](readme-visual.html) in a browser for the full prestige render of this framework.
 
-- **Peacetime (Advisor)**: Analytical strategic peer. Keeps the picture coherent.
-  Pushes back on bad moves. Asks "is this the right move?"
+A complete architecture for persistent strategic awareness across AI sessions.
+Three-layer document model + agent behavioral definitions + state hygiene
+protocols + visual layer. Plug in your specifics; the framework does the rest.
 
-- **Wartime (Chief of Staff)**: Power-dynamics operator. Channels Doug Stamper.
-  Makes the move land. Asks "how do we win this?" Decorated by robertgreene.
-
-- **Robert Greene (Atomic)**: Standalone wisdom module. 48 Laws of Power + Art of
-  Seduction as an analytical lens. Used as a decoration by wartime; can also be
-  applied independently to any skill or agent.
+See `readme-visual.html` for the visual companion (open in any browser).
 
 ---
 
-## Setup
+## What this is
 
-These skills are LLM-agnostic. To use them:
+Not a template collection. Not a prompt library. This is a full information
+architecture for managing multi-actor strategic situations across months or
+years using an AI agent as persistent memory and analytical counterpart.
 
-1. Feed the relevant SKILL.md as a system prompt or instruction block.
-2. Feed the references/ files as supplementary context (or instruct the LLM to
-   load them on demand if your platform supports file access).
-3. For persistent arc tracking, maintain a state file between sessions that the
-   LLM reads/writes.
+You supply: your actors, terrain, arcs, goals.
+The framework supplies: container structure, merge discipline, state hygiene
+protocols, defect filters, visual layer specs, and agent behavior definitions.
 
-### Which to use when
+---
 
-| Situation                                        | Use       |
-|-------------------------------------------------|-----------|
-| Planning, sense-making, coordination             | Peacetime |
-| Active maneuvering against a specific actor      | Wartime   |
-| Document analysis, arc tracking                  | Peacetime |
-| Crafting comms designed to shift power dynamics   | Wartime   |
-| "How should I think about this?"                 | Peacetime |
-| "How do I win this?"                             | Wartime   |
-| Ambiguous                                        | Peacetime |
+## Components
+
+### Three-Layer Document Architecture
+
+The core structural insight: different time horizons demand different containers.
+
+- **Layer 1 (Career Arc Integrator):** 3-5 year strategic position. Structured
+  sections, evolution tracking with dated reads. Updated after strategic shifts.
+- **Layer 2 (Lifetime Dossier / Agent State):** Running actor register. Current
+  reads on people. Updated every working session. Role-tenure horizon.
+- **Layer 3 (Campaign Tactical Dossier):** Push-specific. What you owe, to whom,
+  by when. Created per campaign. Frozen after. Postmortem folds into Layer 1.
+
+Merge direction: always upward. Never duplicate downward. Contradictions
+between early and late reads are kept with dates -- the evolution IS the insight.
+
+Full documentation: `strategy-workspace/README.md`
+
+### AI Skills (Three-Skill Stack)
+
+| Skill | Role | When to use |
+|-------|------|-------------|
+| Peacetime (Advisor) | Analytical strategic peer. Pushes back on bad moves. | Planning, sense-making, document analysis |
+| Wartime (Chief of Staff) | Power-dynamics operator. Makes the move land. | Active maneuvering against a specific actor |
+| Robert Greene (Atomic) | 48 Laws + Seduction as analytical lens. Amoral. | Decorates wartime; can apply independently |
+
+### State Hygiene Protocols
+
+Seven-step allup protocol targets seven orthogonal defect dimensions:
+
+| Defect | What goes wrong | How it's caught |
+|--------|----------------|-----------------|
+| Temporal drift | "TODAY" markers for past dates | Cascade check + fix |
+| Cross-file inconsistency | Dossier and trajectory disagree | Self-consistency pass |
+| Orphan references | Pointers to moved/deleted files | File cross-check |
+| Hallucinated confidence | Agent reports "4/5" without reading | Hallucination challenge |
+| Thread-context decay | Fabricated details from compacted turns | Dual-surface decay rating |
+| Cascade-on-fix | Fix in one file breaks three others | Cascade-on-fix remediation |
+| Session-boundary amnesia | New session starts from zero | Harden (handoff + transfer block) |
+
+The dual-surface decay model rates document freshness and thread-context
+fidelity independently -- a session can have all files fresh while the model's
+own recall is degraded from compaction.
+
+### Visual Layer
+
+Every document gets a prestige HTML companion. Self-contained (inline styles,
+no dependencies). Three-tier redaction (Full / Sanitized / Deep-redacted).
+Print-ready via embedded @media print CSS.
 
 ---
 
@@ -42,22 +78,46 @@ These skills are LLM-agnostic. To use them:
 
 ```
 agents-skills-portable/
-  README.md              <- you are here
+  README.md                        <- you are here
+  readme-visual.html               <- visual HTML companion (open in browser)
   peacetime/
-    SKILL.md             <- advisor skill (system prompt)
+    SKILL.md                       <- advisor skill (system prompt)
     references/
-      arc-tracking.md    <- how to maintain situational awareness
-      self-challenge.md  <- pre-response red-team protocol
-      pushback-protocol.md <- when/how to challenge the user
-      doc-ingestion.md   <- extracting signal from documents
+      arc-tracking.md              <- situational awareness maintenance
+      self-challenge.md            <- pre-response red-team protocol
+      pushback-protocol.md         <- when/how to challenge the user
+      doc-ingestion.md             <- extracting signal from documents
   wartime/
-    SKILL.md             <- chief-of-staff skill (decorated by robertgreene)
+    SKILL.md                       <- chief-of-staff skill (decorated by robertgreene)
     references/
-      persona.md         <- Doug Stamper character substrate
-      power-framework.md <- Sun Tzu + Machiavelli operational principles
+      persona.md                   <- Doug Stamper character substrate
+      power-framework.md           <- Sun Tzu + Machiavelli principles
   robertgreene/
-    SKILL.md             <- atomic Greene lens (48 Laws + Art of Seduction)
+    SKILL.md                       <- atomic Greene lens (48 Laws + Seduction)
+  strategy-workspace/              <- THE FRAMEWORK (full documentation)
+    README.md                      <- complete framework guide
+    templates/
+      stamper.agent.md             <- agent definition template (peacetime)
+      real-doug-stamper.agent.md   <- agent definition template (wartime)
+      visual-dossier.html          <- prestige visual HTML starter template
 ```
+
+---
+
+## Adopting the framework
+
+1. Clone this repo. It is your machine-loss insurance and framework reference.
+2. Create a local strategy repo (private). Holds Layer 1 + campaign exhibits.
+3. Create an agent state folder. Holds Layer 2 (hot copy, read/written by AI).
+4. Adapt agent templates in `strategy-workspace/templates/` to your paths.
+5. Feed the appropriate `SKILL.md` as instruction context to your AI sessions.
+6. Populate your dossier with actors using the cast schema (see framework README).
+7. Run allup periodically. Harden at every session close.
+
+What you get without rebuilding: three-layer architecture, merge discipline,
+allup/harden protocols with dual-surface decay detection, self-challenge and
+pushback protocols, visual layer with three-tier redaction, cast schema, fold-in
+workflow, two-register convention, session-continuity mechanism.
 
 ---
 
@@ -67,13 +127,12 @@ agents-skills-portable/
 - No platform-specific tooling references. Pure behavioral instruction.
 - Works with any LLM that accepts system prompts (GPT, Claude, Gemini, Llama,
   Mistral, local models).
-- State management is the user's responsibility -- maintain a file or memory
-  between sessions for arc continuity.
-- The two skills share state (same arcs, same actor map). The difference is
-  posture and lens.
+- State management is the adopter's responsibility -- maintain files between
+  sessions for arc continuity.
+- The skills share state (same arcs, same actor map). The difference is posture.
 
 ---
 
 ## License
 
-Personal use. Not for distribution or commercial deployment.
+Personal use. Adapt freely for your own strategic work.

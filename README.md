@@ -40,13 +40,14 @@ between early and late reads are kept with dates -- the evolution IS the insight
 
 Full documentation: `strategy-workspace/README.md`
 
-### AI Skills (Three-Skill Stack)
+### AI Skills (Four-Skill Stack)
 
 | Skill | Role | When to use |
 |-------|------|-------------|
 | Peacetime (Advisor) | Analytical strategic peer. Pushes back on bad moves. | Planning, sense-making, document analysis |
 | Wartime (Chief of Staff) | Power-dynamics operator. Makes the move land. | Active maneuvering against a specific actor |
 | Robert Greene (Atomic) | 48 Laws + Seduction as analytical lens. Amoral. | Decorates wartime; can apply independently |
+| Housekeeper (Mixin) | State hygiene, reconciliation, spring cleaning. | System-level deep clean, staleness detection |
 
 ### State Hygiene Protocols
 
@@ -94,6 +95,10 @@ agents-skills-portable/
       power-framework.md           <- Sun Tzu + Machiavelli principles
   robertgreene/
     SKILL.md                       <- atomic Greene lens (48 Laws + Seduction)
+  housekeeper/
+    SKILL.md                       <- state hygiene mixin (springclean function)
+    templates/
+      reconciliation-report-template.md  <- report structure template
   strategy-workspace/              <- THE FRAMEWORK (full documentation)
     README.md                      <- complete framework guide
     templates/

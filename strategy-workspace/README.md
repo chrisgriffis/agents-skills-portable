@@ -145,6 +145,10 @@ Design principles for strategy visuals:
 
 See `templates/visual-dossier.html` for a starter template.
 
+See `templates/weapon-rack.md` for the verbal combat preparation template (multi-shelf
+ammunition structure with kill phrases, designed for principals deploying arguments
+orally in meetings rather than in writing).
+
 ---
 
 ## Operational Conventions

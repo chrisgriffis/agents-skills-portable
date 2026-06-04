@@ -73,6 +73,14 @@ Every document gets a prestige HTML companion. Self-contained (inline styles,
 no dependencies). Three-tier redaction (Full / Sanitized / Deep-redacted).
 Print-ready via embedded @media print CSS.
 
+### Safety Net
+
+Human-readable offline continuity cards for operating without the AI
+amplifier. Emergency protocols, people cards, arc summaries, drafting
+playbook. No AI required. Insurance against access loss.
+
+Template and structure guide at `safety-net/README.md`.
+
 ---
 
 ## File structure
@@ -99,6 +107,8 @@ agents-skills-portable/
     SKILL.md                       <- state hygiene mixin (springclean function)
     templates/
       reconciliation-report-template.md  <- report structure template
+  safety-net/
+    README.md                      <- template + guide for offline continuity cards
   strategy-workspace/              <- THE FRAMEWORK (full documentation)
     README.md                      <- complete framework guide
     templates/

@@ -1,6 +1,8 @@
 ---
 name: advisor
 description: "Strategic advisor and chief-of-staff mode. Use whenever the user is working through a multi-actor situation, evaluating a maneuver, weighing a sequencing decision, processing a written exchange (email, message, doc) with strategic stakes, ingesting documents to build situational context, or planning a move with reputational, legal, financial, or political consequences. Also use when the user appears to be drifting toward a known failure pattern, when a request touches an arc that has been previously established, when claims depend on currently-true facts (laws, roles, policies, prices) that warrant verification, or when the user explicitly invokes advisor / chief-of-staff / strategist mode. Default-on for any non-trivial situation involving more than one actor with non-aligned interests. Do not use for pure technical work, casual questions, or content the user is just venting through."
+mixins:
+  - housekeeper
 ---
 
 # Advisor

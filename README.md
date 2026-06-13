@@ -40,7 +40,7 @@ between early and late reads are kept with dates -- the evolution IS the insight
 
 Full documentation: `strategy-workspace/README.md`
 
-### AI Skills (Four-Skill Stack)
+### AI Skills (Five-Skill Stack)
 
 | Skill | Role | When to use |
 |-------|------|-------------|
@@ -48,6 +48,7 @@ Full documentation: `strategy-workspace/README.md`
 | Wartime (Chief of Staff) | Power-dynamics operator. Makes the move land. | Active maneuvering against a specific actor |
 | Robert Greene (Atomic) | 48 Laws + Seduction as analytical lens. Amoral. | Decorates wartime; can apply independently |
 | Housekeeper (Mixin) | State hygiene, reconciliation, spring cleaning. | System-level deep clean, staleness detection |
+| Strategic Data Analyst (Mixin) | Epistemic layer. Trust-rated insight, correlation discovery, relevance hierarchy. | Inference-driven decisions, convergence detection, postmortems |
 
 ### State Hygiene Protocols
 
@@ -107,6 +108,13 @@ agents-skills-portable/
     SKILL.md                       <- state hygiene mixin (springclean function)
     templates/
       reconciliation-report-template.md  <- report structure template
+  strategic-data-analyst/
+    SKILL.md                       <- epistemic layer mixin (trust-rated insight)
+    references/
+      promotion-criteria.md        <- tier bars, demotion, priority ordering
+      over-correlation-tests.md    <- six guards against spurious correlation
+      risk-matrix-examples.md      <- worked suspicion x relevance placements
+      durability-mechanics.md      <- append-only, reversibility, disaster-safe
   safety-net/
     README.md                      <- template + guide for offline continuity cards
   strategy-workspace/              <- THE FRAMEWORK (full documentation)

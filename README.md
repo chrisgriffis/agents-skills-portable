@@ -38,7 +38,7 @@ The core structural insight: different time horizons demand different containers
 Merge direction: always upward. Never duplicate downward. Contradictions
 between early and late reads are kept with dates -- the evolution IS the insight.
 
-Full documentation: `strategy-workspace/README.md`
+Full documentation: `v1/strategy-workspace/README.md`
 
 ### AI Skills (Five-Skill Stack)
 
@@ -80,7 +80,7 @@ Human-readable offline continuity cards for operating without the AI
 amplifier. Emergency protocols, people cards, arc summaries, drafting
 playbook. No AI required. Insurance against access loss.
 
-Template and structure guide at `safety-net/README.md`.
+Template and structure guide at `v1/safety-net/README.md`.
 
 ---
 
@@ -88,41 +88,45 @@ Template and structure guide at `safety-net/README.md`.
 
 ```
 agents-skills-portable/
-  README.md                        <- you are here
-  readme-visual.html               <- visual HTML companion (open in browser)
-  peacetime/
-    SKILL.md                       <- advisor skill (system prompt)
-    references/
-      arc-tracking.md              <- situational awareness maintenance
-      self-challenge.md            <- pre-response red-team protocol
-      pushback-protocol.md         <- when/how to challenge the user
-      doc-ingestion.md             <- extracting signal from documents
-  wartime/
-    SKILL.md                       <- chief-of-staff skill (decorated by robertgreene)
-    references/
-      persona.md                   <- Doug Stamper character substrate
-      power-framework.md           <- Sun Tzu + Machiavelli principles
-  robertgreene/
-    SKILL.md                       <- atomic Greene lens (48 Laws + Seduction)
-  housekeeper/
-    SKILL.md                       <- state hygiene mixin (springclean function)
-    templates/
-      reconciliation-report-template.md  <- report structure template
-  strategic-data-analyst/
-    SKILL.md                       <- epistemic layer mixin (trust-rated insight)
-    references/
-      promotion-criteria.md        <- tier bars, demotion, priority ordering
-      over-correlation-tests.md    <- six guards against spurious correlation
-      risk-matrix-examples.md      <- worked suspicion x relevance placements
-      durability-mechanics.md      <- append-only, reversibility, disaster-safe
-  safety-net/
-    README.md                      <- template + guide for offline continuity cards
-  strategy-workspace/              <- THE FRAMEWORK (full documentation)
-    README.md                      <- complete framework guide
-    templates/
-      stamper.agent.md             <- agent definition template (peacetime)
-      real-doug-stamper.agent.md   <- agent definition template (wartime)
-      visual-dossier.html          <- prestige visual HTML starter template
+  README.md                          <- you are here
+  readme-visual.html                 <- visual HTML companion (open in browser)
+  v1/                                <- shipped framework (skills + workspace)
+    peacetime/
+      SKILL.md                       <- advisor skill (system prompt)
+      references/
+        arc-tracking.md              <- situational awareness maintenance
+        self-challenge.md            <- pre-response red-team protocol
+        pushback-protocol.md         <- when/how to challenge the user
+        doc-ingestion.md             <- extracting signal from documents
+    wartime/
+      SKILL.md                       <- chief-of-staff skill (decorated by robertgreene)
+      references/
+        persona.md                   <- Doug Stamper character substrate
+        power-framework.md           <- Sun Tzu + Machiavelli principles
+    robertgreene/
+      SKILL.md                       <- atomic Greene lens (48 Laws + Seduction)
+    housekeeper/
+      SKILL.md                       <- state hygiene mixin (springclean function)
+      templates/
+        reconciliation-report-template.md  <- report structure template
+    strategic-data-analyst/
+      SKILL.md                       <- epistemic layer mixin (trust-rated insight)
+      references/
+        promotion-criteria.md        <- tier bars, demotion, priority ordering
+        over-correlation-tests.md    <- six guards against spurious correlation
+        risk-matrix-examples.md      <- worked suspicion x relevance placements
+        durability-mechanics.md      <- append-only, reversibility, disaster-safe
+    safety-net/
+      README.md                      <- template + guide for offline continuity cards
+    strategy-workspace/              <- THE FRAMEWORK (full documentation)
+      README.md                      <- complete framework guide
+      templates/
+        stamper.agent.md             <- agent definition template (peacetime)
+        real-doug-stamper.agent.md   <- agent definition template (wartime)
+        visual-dossier.html          <- prestige visual HTML starter template
+  v2-planning/                       <- design docs for next architecture
+    graph-schema-design.md           <- archon temporal graph schema
+    franchiser-architecture.md       <- services-as-franchiser model
 ```
 
 ---
@@ -132,7 +136,7 @@ agents-skills-portable/
 1. Clone this repo. It is your machine-loss insurance and framework reference.
 2. Create a local strategy repo (private). Holds Layer 1 + campaign exhibits.
 3. Create an agent state folder. Holds Layer 2 (hot copy, read/written by AI).
-4. Adapt agent templates in `strategy-workspace/templates/` to your paths.
+4. Adapt agent templates in `v1/strategy-workspace/templates/` to your paths.
 5. Feed the appropriate `SKILL.md` as instruction context to your AI sessions.
 6. Populate your dossier with actors using the cast schema (see framework README).
 7. Run allup periodically. Harden at every session close.

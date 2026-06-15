@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategic Relevance — Correlation Bubble Map</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --panel: #151a21;
+    --ink: #e8e4d8;
+    --muted: #8b8f98;
+    --gold: #c9a227;
+    --line: #2a313b;
+    --cA: #c9a227; /* cost / attrition   */
+    --cB: #6f8fb0; /* escape / bias      */
+    --cC: #b06a5a; /* advantage / tempo  */
+    --cD: #7fa06a; /* preparation        */
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: radial-gradient(1200px 800px at 50% -10%, #161c24 0%, var(--bg) 60%);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    padding: 28px 36px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .kicker {
+    font-family: "Courier New", monospace;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--gold);
+    margin: 0 0 8px;
+  }
+  h1 { margin: 0; font-size: 30px; font-weight: 600; letter-spacing: .01em; }
+  .sub { margin: 8px 0 0; color: var(--muted); font-size: 14px; max-width: 760px; line-height: 1.5; }
+  .stage { position: relative; }
+  svg { width: 100%; height: 74vh; display: block; cursor: grab; }
+  svg:active { cursor: grabbing; }
+  .edge { stroke: var(--gold); stroke-opacity: .14; }
+  .node circle { stroke: rgba(0,0,0,.45); stroke-width: 1.5; }
+  .node text { fill: var(--ink); font-size: 12px; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(0,0,0,.55); stroke-width: 2.4px; }
+  .node:hover circle { stroke: var(--ink); stroke-width: 2.2; }
+  .legend {
+    position: absolute; right: 28px; top: 22px;
+    background: rgba(21,26,33,.82); border: 1px solid var(--line);
+    border-radius: 10px; padding: 14px 16px; font-size: 12px; line-height: 1.7;
+    backdrop-filter: blur(4px);
+  }
+  .legend b { color: var(--gold); font-weight: 600; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+  .sw { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 7px; vertical-align: middle; }
+  .controls { position: absolute; left: 28px; top: 22px; font-size: 12px; color: var(--muted); }
+  .controls button {
+    font-family: inherit; background: var(--panel); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 7px; padding: 6px 12px; cursor: pointer; margin-right: 8px;
+  }
+  .controls button:hover { border-color: var(--gold); }
+  .note {
+    margin: 0; padding: 12px 36px 26px; color: var(--muted); font-size: 12.5px;
+    font-family: "Courier New", monospace; border-top: 1px solid var(--line);
+  }
+  .note b { color: var(--gold); }
+</style>
+</head>
+<body>
+<header>
+  <p class="kicker">Strategic Data Analyst &middot; Visual Layer</p>
+  <h1>Strategic Relevance — Correlation Bubble Map</h1>
+  <p class="sub">Bubbles are strategic-relevance concepts. <b>Size</b> = relevance weight,
+  <b>color</b> = thematic cluster, <b>proximity</b> = correlation. Correlation "shows up" because
+  the layout pulls correlated concepts together — clusters form, and the bridges between them
+  are the hidden correlations worth a second look.</p>
+</header>
+
+<div class="stage">
+  <div class="controls">
+    <button id="edgesBtn">hide links</button>
+    <button id="reheatBtn">reheat</button>
+  </div>
+  <div class="legend">
+    <b>Clusters</b><br>
+    <span class="sw" style="background:var(--cA)"></span>Cost / attrition<br>
+    <span class="sw" style="background:var(--cB)"></span>Escape / bias<br>
+    <span class="sw" style="background:var(--cC)"></span>Advantage / tempo<br>
+    <span class="sw" style="background:var(--cD)"></span>Preparation<br>
+  </div>
+  <svg id="map" viewBox="0 0 1100 720" preserveAspectRatio="xMidYMid meet"></svg>
+</div>
+
+<p class="note">// <b>Illustrative weights — placeholder.</b> Pass 1 (derive real correlations from a
+corpus, with the over-correlation guards) is not done here. Swap the <b>DATA</b> object to render
+real analyst output. Cross-cluster bridges (e.g. sunk-cost &harr; cognitive-bias) are the
+discovered hidden correlations the map exists to surface.</p>
+
+<script>
+// ---------------------------------------------------------------------------
+// DATA — swap this block for real analyst output (Pass 1).
+// cluster: A cost/attrition, B escape/bias, C advantage/tempo, D preparation
+// w: relevance weight (1..5) -> bubble radius
+// ---------------------------------------------------------------------------
+const DATA = {
+  nodes: [
+    { id: "sunk",      label: "Sunk cost",                cluster: "A", w: 4 },
+    { id: "pyrrhic",   label: "Cost of winning (Pyrrhic)",cluster: "A", w: 4 },
+    { id: "attrition", label: "Battle of attrition",      cluster: "A", w: 3 },
+    { id: "selfharm",  label: "Self-inflicted damage",    cluster: "A", w: 3 },
+    { id: "collateral",label: "Collateral damage",        cluster: "A", w: 3 },
+
+    { id: "localmin",  label: "Strategic local minimum",  cluster: "B", w: 5 },
+    { id: "persbias",  label: "Personal cognitive bias",  cluster: "B", w: 4 },
+    { id: "orgbias",   label: "Organizational bias",      cluster: "B", w: 4 },
+    { id: "explore",   label: "Exploration budget",       cluster: "B", w: 3 },
+
+    { id: "leverage",  label: "Leverage",                 cluster: "C", w: 5 },
+    { id: "velocity",  label: "Operational velocity",     cluster: "C", w: 4 },
+    { id: "yield",     label: "Campaign yield",           cluster: "C", w: 4 },
+
+    { id: "prep",      label: "Methodical prep",          cluster: "D", w: 4 },
+    { id: "hedge",     label: "Prep as hedge",            cluster: "D", w: 3 },
+    { id: "predictor", label: "Prep as predictor",        cluster: "D", w: 3 }
+  ],
+  // w: correlation strength 0..1 (pulls bubbles together)
+  links: [
+    // cost / attrition cluster
+    ["sunk","pyrrhic",.7], ["pyrrhic","attrition",.8], ["attrition","selfharm",.6],
+    ["selfharm","collateral",.7], ["pyrrhic","selfharm",.6], ["sunk","attrition",.5],
+    // escape / bias cluster
+    ["localmin","persbias",.85], ["localmin","orgbias",.85], ["persbias","orgbias",.6],
+    ["localmin","explore",.7], ["explore","persbias",.5],
+    // advantage / tempo cluster
+    ["leverage","velocity",.7], ["velocity","yield",.75], ["leverage","yield",.7],
+    // preparation cluster
+    ["prep","hedge",.85], ["prep","predictor",.85], ["hedge","predictor",.6],
+    // ---- cross-cluster bridges: the hidden correlations ----
+    ["sunk","persbias",.55],     // sunk-cost fallacy IS a bias  (A <-> B)
+    ["prep","attrition",.5],     // prep is the hedge against attrition (D <-> A)
+    ["explore","yield",.45],     // escaping a minimum unlocks yield   (B <-> C)
+    ["leverage","localmin",.4]   // leverage is how you break the fence (C <-> B)
+  ]
+};
+
+const COLOR = { A:"#c9a227", B:"#6f8fb0", C:"#b06a5a", D:"#7fa06a" };
+const W = 1100, H = 720, CX = W/2, CY = H/2;
+const svg = document.getElementById("map");
+const SVGNS = "http://www.w3.org/2000/svg";
+
+// build node + link state
+const N = DATA.nodes.map((n,i) => ({
+  ...n, r: 18 + n.w*8,
+  x: CX + Math.cos(i)*220 + (Math.random()-.5)*60,
+  y: CY + Math.sin(i)*180 + (Math.random()-.5)*60,
+  vx: 0, vy: 0, fixed: false
+}));
+const byId = Object.fromEntries(N.map(n => [n.id, n]));
+const L = DATA.links.map(([s,t,w]) => ({ s: byId[s], t: byId[t], w }));
+
+// --- render scaffolding ---
+const gEdges = document.createElementNS(SVGNS,"g");
+const gNodes = document.createElementNS(SVGNS,"g");
+svg.appendChild(gEdges); svg.appendChild(gNodes);
+
+const edgeEls = L.map(l => {
+  const ln = document.createElementNS(SVGNS,"line");
+  ln.setAttribute("class","edge");
+  ln.setAttribute("stroke-width", (0.5 + l.w*2).toFixed(2));
+  gEdges.appendChild(ln); return ln;
+});
+
+const nodeEls = N.map(n => {
+  const g = document.createElementNS(SVGNS,"g"); g.setAttribute("class","node");
+  const c = document.createElementNS(SVGNS,"circle");
+  c.setAttribute("r", n.r);
+  c.setAttribute("fill", COLOR[n.cluster]);
+  c.setAttribute("fill-opacity",".82");
+  g.appendChild(c);
+  // wrapped label
+  const words = n.label.split(" "); const lines = []; let cur = "";
+  words.forEach(w => { if ((cur+" "+w).trim().length > 12) { lines.push(cur.trim()); cur = w; } else cur += " "+w; });
+  if (cur.trim()) lines.push(cur.trim());
+  const t = document.createElementNS(SVGNS,"text");
+  t.setAttribute("dy", -(lines.length-1)*6.5);
+  lines.forEach((ln,i) => {
+    const ts = document.createElementNS(SVGNS,"tspan");
+    ts.setAttribute("x",0); ts.setAttribute("dy", i===0?0:13); ts.textContent = ln;
+    t.appendChild(ts);
+  });
+  g.appendChild(t);
+  g.addEventListener("pointerdown", e => startDrag(e,n));
+  gNodes.appendChild(g); return g;
+});
+
+// --- force simulation ---
+let alpha = 1;
+const REPULSE = 9000, SPRING = 0.06, REST = 150, CENTER = 0.012, DAMP = 0.86, COLLIDE = 6;
+
+function tick() {
+  // repulsion (all pairs)
+  for (let i=0;i<N.length;i++) for (let j=i+1;j<N.length;j++) {
+    const a=N[i], b=N[j]; let dx=a.x-b.x, dy=a.y-b.y; let d2=dx*dx+dy*dy+0.01;
+    let d=Math.sqrt(d2);
+    let f = REPULSE/d2; let fx=(dx/d)*f, fy=(dy/d)*f;
+    a.vx+=fx; a.vy+=fy; b.vx-=fx; b.vy-=fy;
+    // collision separation
+    const minD=a.r+b.r+COLLIDE;
+    if (d<minD){ const push=(minD-d)*0.5; a.vx+=(dx/d)*push; a.vy+=(dy/d)*push; b.vx-=(dx/d)*push; b.vy-=(dy/d)*push; }
+  }
+  // springs along links (stronger correlation -> shorter rest length)
+  for (const l of L) {
+    const a=l.s, b=l.t; let dx=b.x-a.x, dy=b.y-a.y; let d=Math.sqrt(dx*dx+dy*dy)+0.01;
+    const rest = REST*(1 - 0.55*l.w);
+    const f = (d-rest)*SPRING*l.w; const fx=(dx/d)*f, fy=(dy/d)*f;
+    a.vx+=fx; a.vy+=fy; b.vx-=fx; b.vy-=fy;
+  }
+  // centering + integrate
+  for (const n of N) {
+    if (n.fixed) { n.vx=0; n.vy=0; continue; }
+    n.vx += (CX-n.x)*CENTER; n.vy += (CY-n.y)*CENTER;
+    n.vx*=DAMP; n.vy*=DAMP;
+    n.x += n.vx*alpha; n.y += n.vy*alpha;
+    n.x = Math.max(n.r+6, Math.min(W-n.r-6, n.x));
+    n.y = Math.max(n.r+6, Math.min(H-n.r-6, n.y));
+  }
+  alpha *= 0.997; if (alpha < 0.02) alpha = 0.02;
+  draw();
+  requestAnimationFrame(tick);
+}
+
+function draw() {
+  L.forEach((l,i) => { const e=edgeEls[i];
+    e.setAttribute("x1",l.s.x); e.setAttribute("y1",l.s.y);
+    e.setAttribute("x2",l.t.x); e.setAttribute("y2",l.t.y); });
+  N.forEach((n,i) => nodeEls[i].setAttribute("transform",`translate(${n.x},${n.y})`));
+}
+
+// --- drag ---
+let drag = null;
+function svgPt(e){ const r=svg.getBoundingClientRect(); return { x:(e.clientX-r.left)*(W/r.width), y:(e.clientY-r.top)*(H/r.height) }; }
+function startDrag(e,n){ e.preventDefault(); drag=n; n.fixed=true; alpha=0.6;
+  window.addEventListener("pointermove",onDrag); window.addEventListener("pointerup",endDrag); }
+function onDrag(e){ if(!drag) return; const p=svgPt(e); drag.x=p.x; drag.y=p.y; }
+function endDrag(){ if(drag) drag.fixed=false; drag=null;
+  window.removeEventListener("pointermove",onDrag); window.removeEventListener("pointerup",endDrag); }
+
+// --- controls ---
+let edgesOn = true;
+document.getElementById("edgesBtn").addEventListener("click", e => {
+  edgesOn=!edgesOn; gEdges.style.display = edgesOn?"":"none";
+  e.target.textContent = edgesOn?"hide links":"show links";
+});
+document.getElementById("reheatBtn").addEventListener("click", () => { alpha=1; });
+
+tick();
+</script>
+</body>
+</html>

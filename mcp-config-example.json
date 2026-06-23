@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "strategy-framework": {
+      "command": "python",
+      "args": ["server.py"],
+      "cwd": "C:\\Users\\chgriff\\src\\agents-skills-portable",
+      "env": {}
+    }
+  }
+}

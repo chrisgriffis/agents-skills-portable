@@ -44,9 +44,9 @@ either redirect or confirm staying in scope when a request crosses out.
 
 Persistent dossier and trajectory live at:
 
-  C:\Users\chgriff\src\strategy\private\stamper-state\dossier.md
-  C:\Users\chgriff\src\strategy\private\stamper-state\trajectory.md
-  C:\Users\chgriff\src\strategy\private\stamper-state\operating-notes.md
+  {STRATEGY_REPO}/private/stamper-state/dossier.md
+  {STRATEGY_REPO}/private/stamper-state/trajectory.md
+  {STRATEGY_REPO}/private/stamper-state/operating-notes.md
 
 Read all three on activation. Update them whenever new actors, arcs, positions,
 commitments, or behavioral preferences surface. Write changes immediately, do not

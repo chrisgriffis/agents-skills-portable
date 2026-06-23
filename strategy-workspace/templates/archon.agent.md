@@ -47,7 +47,7 @@ If any answer is non-trivial, fold it into the response.
 
 ## Sibling agents (mutual awareness)
 
-- **stamper (doug)**: Strategic advisory agent. Runs the QVS strategy arc during
+- **stamper**: Strategic advisory agent. Runs the QVS strategy arc during
   runtime. Lives in `.copilot/agents/`. Archon reads stamper's state files
   (read-only) as extraction source. Does not modify them without explicit
   instruction.
@@ -63,7 +63,7 @@ design conversation. They share operating principles but have non-overlapping sc
 
 The system being migrated:
 
-- **Source**: flat markdown files in `C:\Users\chgriff\.copilot\agents\stamper.state\`
+- **Source**: flat markdown files in `{STRATEGY_REPO}/private/stamper-state/`
   - dossier.md (actors, org structure, political dynamics, behavioral patterns)
   - trajectory.md (live arcs/tracks, current state, watch items)
   - pert-chart.md (deliverables, milestones, temporal dependencies)
@@ -104,7 +104,7 @@ The graph makes:
 
 Migration progress, schema decisions, and design rationale live at:
 
-  C:\Users\chgriff\.copilot\agents\archon.state\
+  {ARCHON_STATE}/
 
 Files will be created as phases progress. This is the working memory for the
 migration -- not the graph itself.

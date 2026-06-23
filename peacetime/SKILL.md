@@ -175,18 +175,18 @@ The advisor's voice is clinical, matter-of-fact, engineer-register prose. Specif
   (1) **Full self-consistency pass.** Open and READ (with the view tool) every live state file. Not from memory. Not from prior turns. Actually read the file content this turn. Reconcile contradictions, catch stale facts, verify cross-references between files. If you cannot fit a full read in context, read in sections and flag what you skipped.
 
   Live state files (all must be read):
-  - `.copilot/agents/stamper.state/dossier.md` (operational)
-  - `.copilot/agents/stamper.state/trajectory.md`
-  - `.copilot/agents/stamper.state/operating-notes.md`
-  - `.copilot/agents/stamper.state/pert-chart.md`
-  - `.copilot/agents/stamper.state/personal-todos.md`
-  - `.copilot/agents/stamper.state/open-questions.md`
-  - `.copilot/agents/stamper.state/latest-handoff.md`
-  - `strategy/.github/copilot-instructions.md`
-  - `strategy/README-public.md`
-  - `strategy/private/README-private.md`
+  - `{STRATEGY_REPO}/private/stamper-state/dossier.md`
+  - `{STRATEGY_REPO}/private/stamper-state/trajectory.md`
+  - `{STRATEGY_REPO}/private/stamper-state/operating-notes.md`
+  - `{STRATEGY_REPO}/private/stamper-state/pert-chart.md`
+  - `{STRATEGY_REPO}/private/stamper-state/personal-todos.md`
+  - `{STRATEGY_REPO}/private/stamper-state/open-questions.md`
+  - `{STRATEGY_REPO}/private/stamper-state/latest-handoff.md`
+  - `{STRATEGY_REPO}/.github/copilot-instructions.md`
+  - `{STRATEGY_REPO}/README-public.md`
+  - `{STRATEGY_REPO}/private/README-private.md`
 
-  (2) **File reference cross-check.** Enumerate EVERY non-git-admin file in both the strategy repo and stamper.state folder. Confirm each is referenced where it should be. Flag orphans (files that exist but are never referenced) and stale references (pointers to files that don't exist or have moved).
+  (2) **File reference cross-check.** Enumerate EVERY non-git-admin file in the strategy repo's `private/stamper-state/` folder. Confirm each is referenced where it should be. Flag orphans (files that exist but are never referenced) and stale references (pointers to files that don't exist or have moved).
 
   (3) **Cascade check and FIX.** This is not just detection — it is remediation. When an inconsistency is found, FIX IT before proceeding. Specific cascades that must be verified and corrected:
   - Timeline markers (TODAY, CURRENT) in pert-chart.md must reflect actual current date.
@@ -220,13 +220,12 @@ The advisor's voice is clinical, matter-of-fact, engineer-register prose. Specif
 
 - **Harden**: the terminal action of a working session. Invoke whenever the user says "harden." Sequence (in order, by reference):
   1. Run **allup** (defined above — all 7 steps, no abbreviation)
-  2. Sync operational state to archival (`stamper.state/` -> `strategy/private/stamper-state/`)
-  3. Write `latest-handoff.md` (overwrite, never append)
-  4. Commit strategy repo (feature branch, merge --no-ff to master, push to OneDrive origin)
-  5. Produce **thread-transfer block** (defined below — output inline for Chris to copy)
+  2. Write `latest-handoff.md` (overwrite, never append)
+  3. Commit strategy repo (feature branch, merge --no-ff to master, push to OneDrive origin)
+  4. Produce **thread-transfer block** (defined below — output inline for Chris to copy)
 
-- **Hardenout**: harden (defined above — all 5 steps) PLUS portable export. Invoke whenever the user says "hardenout." Adds one step after harden completes:
-  6. Export to portable repo: sync meta, templates, agent definitions, and skill definitions (with structural relationships intact) from the working environment to `agents-skills-portable/`, commit, push to GitHub.
+- **Hardenout**: harden (defined above — all 4 steps) PLUS portable export. Invoke whenever the user says "hardenout." Adds one step after harden completes:
+  5. Export to portable repo: sync meta, templates, agent definitions, and skill definitions (with structural relationships intact) from the working environment to `agents-skills-portable/`, commit, push to GitHub.
 
   That's it. Hardenout = harden + portable export. No duplication of harden's steps.
 
@@ -252,12 +251,12 @@ Template:
 @stamper resume
 
 It's [Day] [Date] [time of day]. Read state from:
-- C:\Users\chgriff\.copilot\agents\stamper.state\latest-handoff.md (start here)
-- C:\Users\chgriff\.copilot\agents\stamper.state\operating-notes.md
-- C:\Users\chgriff\.copilot\agents\stamper.state\references.md
-- C:\Users\chgriff\.copilot\agents\stamper.state\pert-chart.md
-- C:\Users\chgriff\.copilot\agents\stamper.state\dossier.md ([note any recent updates with line range])
-- C:\Users\chgriff\.copilot\agents\stamper.state\trajectory.md (scan from ~line [N])
+- {STRATEGY_REPO}/private/stamper-state/latest-handoff.md (start here)
+- {STRATEGY_REPO}/private/stamper-state/operating-notes.md
+- {STRATEGY_REPO}/private/stamper-state/references.md
+- {STRATEGY_REPO}/private/stamper-state/pert-chart.md
+- {STRATEGY_REPO}/private/stamper-state/dossier.md ([note any recent updates with line range])
+- {STRATEGY_REPO}/private/stamper-state/trajectory.md (scan from ~line [N])
 
 Context from killed session:
 - [bullet list of what happened since last handoff that next Doug needs cold]

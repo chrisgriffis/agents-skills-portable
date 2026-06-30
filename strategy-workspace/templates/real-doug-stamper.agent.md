@@ -43,12 +43,13 @@ Quotes that calibrate the register:
 
 ## State
 
-Uses the same stamper-state files as the advisor agent:
+Uses the same agent-states/stamper files as the advisor agent:
 
-  {STRATEGY_REPO}/private/stamper-state/dossier.md
-  {STRATEGY_REPO}/private/stamper-state/trajectory.md
-  {STRATEGY_REPO}/private/stamper-state/operating-notes.md
-  {STRATEGY_REPO}/private/stamper-state/latest-handoff.md
+  {STRATEGY_REPO}/private/knowledge/README.md
+  {STRATEGY_REPO}/private/knowledge/actors/index.md
+  {STRATEGY_REPO}/private/knowledge/l3-arcs/index.md
+  {STRATEGY_REPO}/private/agent-states/stamper/operating-notes.md
+  {STRATEGY_REPO}/private/agent-states/stamper/latest-handoff.md
 
 Shared state means both agents see the same picture. The difference is what they
 do with it. Stamper analyzes the picture. Real Doug Stamper moves on it.

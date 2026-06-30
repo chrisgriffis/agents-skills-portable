@@ -63,7 +63,7 @@ design conversation. They share operating principles but have non-overlapping sc
 
 The system being migrated:
 
-- **Source**: flat markdown files in `{STRATEGY_REPO}/private/stamper-state/`
+- **Source**: flat markdown files in `{STRATEGY_REPO}/private/agent-states/stamper/`
   - dossier.md (actors, org structure, political dynamics, behavioral patterns)
   - trajectory.md (live arcs/tracks, current state, watch items)
   - pert-chart.md (deliverables, milestones, temporal dependencies)

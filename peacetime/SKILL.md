@@ -174,19 +174,31 @@ The advisor's voice is clinical, matter-of-fact, engineer-register prose. Specif
 
   (1) **Full self-consistency pass.** Open and READ (with the view tool) every live state file. Not from memory. Not from prior turns. Actually read the file content this turn. Reconcile contradictions, catch stale facts, verify cross-references between files. If you cannot fit a full read in context, read in sections and flag what you skipped.
 
-  Live state files (all must be read):
-  - `{STRATEGY_REPO}/private/stamper-state/dossier.md`
-  - `{STRATEGY_REPO}/private/stamper-state/trajectory.md`
-  - `{STRATEGY_REPO}/private/stamper-state/operating-notes.md`
-  - `{STRATEGY_REPO}/private/stamper-state/pert-chart.md`
-  - `{STRATEGY_REPO}/private/stamper-state/personal-todos.md`
-  - `{STRATEGY_REPO}/private/stamper-state/open-questions.md`
-  - `{STRATEGY_REPO}/private/stamper-state/latest-handoff.md`
+  Live state files (all must be read this turn). In the decomposed model this is the agent
+  config + the knowledge INDEXES + README, not every entity file:
+  - `{STRATEGY_REPO}/private/agent-states/stamper/latest-handoff.md`
+  - `{STRATEGY_REPO}/private/agent-states/stamper/operating-notes.md`
+  - `{STRATEGY_REPO}/private/agent-states/stamper/open-questions.md`
+  - `{STRATEGY_REPO}/private/agent-states/stamper/pert-chart.md`
+  - `{STRATEGY_REPO}/private/agent-states/stamper/personal-todos.md`
+  - `{STRATEGY_REPO}/private/agent-states/stamper/references.md`
+  - `{STRATEGY_REPO}/private/knowledge/README.md`
+  - `{STRATEGY_REPO}/private/knowledge/actors/index.md`
+  - `{STRATEGY_REPO}/private/knowledge/l3-arcs/index.md`
+  - `{STRATEGY_REPO}/private/knowledge/reference/index.md`
+  - `{STRATEGY_REPO}/private/knowledge/reference/org-hierarchy.md`
+  - `{STRATEGY_REPO}/private/knowledge/l1-daily/` (latest dated file)
+  - `{STRATEGY_REPO}/private/archive/index.md`
   - `{STRATEGY_REPO}/.github/copilot-instructions.md`
   - `{STRATEGY_REPO}/README-public.md`
   - `{STRATEGY_REPO}/private/README-private.md`
 
-  (2) **File reference cross-check.** Enumerate EVERY non-git-admin file in the strategy repo's `private/stamper-state/` folder. Confirm each is referenced where it should be. Flag orphans (files that exist but are never referenced) and stale references (pointers to files that don't exist or have moved).
+  Entity files (knowledge/actors/<slug>.md, knowledge/l3-arcs/<arc>.md, campaigns/*) are NOT
+  all read every allup. The allup VERIFIES the indexes are consistent with the entity files on
+  disk (flag orphans + stale index rows) and spot-checks; entities are lazy-loaded per the boot
+  model in knowledge/README.md. The dossier/trajectory monoliths are retired to archive/knowledge/.
+
+  (2) **File reference cross-check.** Enumerate EVERY non-git-admin file in the agent config folder `{STRATEGY_REPO}/private/agent-states/stamper/` AND every entity file under `{STRATEGY_REPO}/private/knowledge/` (actors/, l3-arcs/, reference/) and `{STRATEGY_REPO}/private/campaigns/`. Confirm each is referenced where it should be, and that every index row resolves to a file that exists. Flag orphans (files that exist but are never referenced / not in their index) and stale references (pointers to files that don't exist or have moved).
 
   (3) **Cascade check and FIX.** This is not just detection — it is remediation. When an inconsistency is found, FIX IT before proceeding. Specific cascades that must be verified and corrected:
   - Timeline markers (TODAY, CURRENT) in pert-chart.md must reflect actual current date.
@@ -251,12 +263,15 @@ Template:
 @stamper resume
 
 It's [Day] [Date] [time of day]. Read state from:
-- {STRATEGY_REPO}/private/stamper-state/latest-handoff.md (start here)
-- {STRATEGY_REPO}/private/stamper-state/operating-notes.md
-- {STRATEGY_REPO}/private/stamper-state/references.md
-- {STRATEGY_REPO}/private/stamper-state/pert-chart.md
-- {STRATEGY_REPO}/private/stamper-state/dossier.md ([note any recent updates with line range])
-- {STRATEGY_REPO}/private/stamper-state/trajectory.md (scan from ~line [N])
+- {STRATEGY_REPO}/private/agent-states/stamper/latest-handoff.md (start here)
+- {STRATEGY_REPO}/private/agent-states/stamper/operating-notes.md
+- {STRATEGY_REPO}/private/knowledge/README.md (architecture + boot model)
+- {STRATEGY_REPO}/private/knowledge/actors/index.md (lazy-load actors on demand)
+- {STRATEGY_REPO}/private/knowledge/l3-arcs/index.md (lazy-load arcs on demand)
+- {STRATEGY_REPO}/private/knowledge/reference/index.md + reference/org-hierarchy.md
+- {STRATEGY_REPO}/private/knowledge/l1-daily/<latest-date>.md
+- {STRATEGY_REPO}/private/agent-states/stamper/references.md, pert-chart.md, open-questions.md
+  (lazy-load specific actor/arc/campaign files as needed; a directive can override to load a full layer)
 
 Context from killed session:
 - [bullet list of what happened since last handoff that next Doug needs cold]

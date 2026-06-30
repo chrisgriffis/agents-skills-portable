@@ -281,12 +281,12 @@ strategy/
     org-strategy-visual.pdf    <- print companion (generated, not maintained)
     rolling-context.txt        <- compressed paste-in
     README-private.md          <- full strategic detail
-    stamper-state/             <- Layer 2 archival copy (synced on harden)
+    agent-states/stamper/             <- Layer 2 archival copy (synced on harden)
       dossier.md               <- lifetime actor register
       trajectory.md            <- arc tracking
       dossier-visual.html      <- actor visualization
     safety-net/                <- emergency continuity cards
-    session-archive/           <- recovered session history
+    archive/           <- recovered session history
     exhibits/                  <- source material + active pushes
       [push-name]/
         backlog.md             <- master work tracking

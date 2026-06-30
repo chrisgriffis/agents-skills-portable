@@ -42,7 +42,7 @@ Full-system reconciliation. Non-negotiable steps, in order:
 
 Discover every non-.git file across all state surfaces:
 - Agent state folder (stamper.state/ or equivalent)
-- Strategy repo (all of private/, exhibits/, session-archive/, safety-net/)
+- Strategy repo (all of private/, exhibits/, archive/, safety-net/)
 - Any referenced external locations
 
 No shortcuts. No sampling. Every file gets registered.
